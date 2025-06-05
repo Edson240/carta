@@ -2,91 +2,61 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Feliz Aniversário ❤️</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Feliz Aniversário 💖</title>
+  <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    body {
-      background-color: #000;
-      color: #fff;
-      font-family: sans-serif;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      text-align: center;
-      overflow-x: hidden;
-    }
-
-    img {
-      max-width: 90vw;
-      max-height: 60vh;
-      margin: 20px 0;
-      border-radius: 20px;
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
-    }
-
-    .text {
-      font-size: 1.2em;
-      padding: 0 20px;
-      max-width: 90vw;
-    }
-
-    #carta {
-      white-space: pre-line;
-      text-align: left;
-      font-size: 1em;
-      padding: 20px;
-      display: none;
-      border: 1px solid #444;
-      margin-top: 30px;
-      border-radius: 10px;
-      background-color: #111;
-    }
-
-    #compartilhar {
-      margin-top: 20px;
-      padding: 10px 20px;
-      background-color: #25d366;
-      border: none;
-      border-radius: 10px;
-      color: white;
-      font-size: 1em;
-      cursor: pointer;
-    }
+    body { margin: 0; background-color: #fff0f5; overflow: hidden; font-family: 'Segoe UI', sans-serif; }
+    .fade-in { opacity: 1; transition: opacity 1s ease-in-out; }
+    .fade-out { opacity: 0; transition: opacity 1s ease-in-out; }
+    #textBox { transition: opacity 1s ease-in-out; }
+    #carta { white-space: pre-wrap; overflow-y: auto; max-height: 80vh; }
   </style>
 </head>
-<body>
+<body class="flex items-center justify-center h-screen relative">
 
-  <img id="photo" src="" alt="Foto do casal" />
-  <div class="text" id="frase"></div>
+  <img id="bgImage" class="absolute top-0 left-0 w-full h-full object-cover fade-in z-0" src="" alt="imagem" />
 
-  <div id="carta"></div>
-  <button id="compartilhar" style="display: none;">Compartilhar no WhatsApp</button>
+  <div class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-30 z-10"></div>
+  <div class="absolute z-20 w-full h-full flex items-center justify-center px-4 text-center">
+    <div id="textBox" class="text-white text-xl md:text-3xl font-semibold opacity-0 bg-white bg-opacity-30 backdrop-blur p-4 rounded-xl"></div>
+  </div>
+
+  <div class="absolute bottom-4 left-0 right-0 flex flex-col items-center gap-3 z-30">
+    <button onclick="mostrarCarta()" class="bg-pink-600 text-white px-6 py-2 rounded-full shadow-md text-lg hover:bg-pink-700 transition">
+      💌 Leia minha carta pra você
+    </button>
+    <a href="#" onclick="compartilharWhatsApp()" class="text-sm text-white underline hover:text-pink-200">Compartilhar no WhatsApp</a>
+  </div>
+
+  <div id="cartaModal" class="fixed top-0 left-0 w-full h-full bg-black bg-opacity-80 z-40 hidden items-center justify-center p-4">
+    <div class="bg-white p-6 rounded-xl max-w-lg w-full text-pink-800 shadow-lg text-lg relative">
+      <div id="carta" class="typing"></div>
+      <button onclick="fecharCarta()" class="absolute top-2 right-4 text-pink-700 text-2xl font-bold">&times;</button>
+    </div>
+  </div>
 
   <script>
-    // Altere esse número se você tiver mais imagens na pasta img/
-    const totalImagens = 10;
-
-    // Monta os caminhos das imagens
-    const images = Array.from({ length: totalImagens }, (_, i) => `img/nos${i + 1}.jpeg`);
-
-    const frases = [
-      "Você ilumina minha vida ❤️",
-      "O seu sorriso é o meu lugar preferido.",
-      "Que sorte a minha ter você!",
-      "Com você, tudo fica mais bonito.",
-      "Eu quero viver todos os aniversários com você.",
-      "Você é a resposta das minhas orações.",
-      "Cada dia com você é um presente.",
-      "Te amo mais do que palavras podem dizer.",
-      "Você é o meu mundo.",
-      "Feliz aniversário, meu amor!"
+    const imagens = [
+      "img/nos1.jpeg", "img/nos2.jpeg", "img/nos3.jpeg", "img/nos4.jpeg", "img/nos5.jpeg",
+      "img/nos6.jpeg", "img/nos7.jpeg", "img/nos8.jpeg", "img/nos9.jpeg", "img/nos10.jpeg"
     ];
 
-    const cartaFinal = `A gnt se conhece há pouco tempo, mas parece que te conheço há uma vida inteira. Em 1 mês de namoro, já tenho certeza de uma coisa: essa é a melhor escolha q eu poderia ter feito.
+    const textos = [
+      "Hoje é o seu dia, mas o presente é meu por ter você na vida.",
+      "Cada momento com você se torna eterno no meu coração.",
+      "Seu sorriso ilumina meu mundo inteiro.",
+      "Você é a razão de eu acreditar no amor verdadeiro.",
+      "Obrigada por ser minha parceira, minha melhor amiga, meu amor.",
+      "A cada novo dia, meu amor por você cresce ainda mais.",
+      "Feliz aniversário, minha princesa linda!",
+      "Que este novo ano te traga mais sonhos realizados.",
+      "Você é linda por dentro e por fora, meu amor eterno.",
+      "Eu te amo. Ontem, hoje, e para sempre. ❤️"
+    ];
+
+    const cartaTexto = `
+A gnt se conhece há pouco tempo, mas parece que te conheço há uma vida inteira. Em 1 mês de namoro, já tenho certeza de uma coisa: essa é a melhor escolha q eu poderia ter feito.
 
 Eu amo o seu sorriso, Amo o jeito q vc cuida de mim, mesmo quando vc está nervoso cmg, Amo sua risada, pq ela ilumina o meu dia cinza.
 
@@ -98,47 +68,77 @@ Alice, Eu quero que você seja a mãe dos meus filhos, o amor da minha vida, a m
 
 Eu te amo muito ❤️❤️`;
 
-    const photo = document.getElementById("photo");
-    const frase = document.getElementById("frase");
-    const carta = document.getElementById("carta");
-    const btn = document.getElementById("compartilhar");
-
-    let i = 0;
-    let order = [...Array(images.length).keys()];
-    order.sort(() => Math.random() - 0.5);
-
-    function showNext() {
-      if (i < images.length) {
-        photo.src = images[order[i]];
-        frase.innerText = frases[Math.floor(Math.random() * frases.length)];
-        i++;
-        setTimeout(showNext, 3000);
-      } else {
-        photo.style.display = "none";
-        frase.style.display = "none";
-        typeWriter();
+    // Funções para randomizar
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
       }
     }
 
-    let j = 0;
-    function typeWriter() {
-      carta.style.display = "block";
-      if (j < cartaFinal.length) {
-        carta.innerHTML += cartaFinal.charAt(j);
-        j++;
-        setTimeout(typeWriter, 30);
-      } else {
-        btn.style.display = "inline-block";
-      }
+    shuffle(imagens);
+    shuffle(textos);
+
+    const imgEl = document.getElementById("bgImage");
+    const textEl = document.getElementById("textBox");
+    const cartaEl = document.getElementById("carta");
+    const modal = document.getElementById("cartaModal");
+
+    let index = 0;
+
+    function trocarSlide() {
+      imgEl.classList.remove("fade-in");
+      imgEl.classList.add("fade-out");
+      textEl.classList.remove("opacity-100");
+      textEl.classList.add("opacity-0");
+
+      setTimeout(() => {
+        imgEl.src = imagens[index % imagens.length];
+        textEl.textContent = textos[index % textos.length];
+        imgEl.classList.remove("fade-out");
+        imgEl.classList.add("fade-in");
+        textEl.classList.remove("opacity-0");
+        textEl.classList.add("opacity-100");
+
+        index++;
+      }, 1000);
     }
 
-    btn.onclick = () => {
-      const msg = encodeURIComponent(cartaFinal);
-      const link = `https://wa.me/?text=${msg}`;
-      window.open(link, "_blank");
-    };
+    imgEl.src = imagens[0];
+    textEl.textContent = textos[0];
+    textEl.classList.add("opacity-100");
+    index = 1;
 
-    showNext();
+    setInterval(trocarSlide, 5000);
+
+    function mostrarCarta() {
+      modal.classList.remove("hidden");
+      cartaEl.innerHTML = "";
+      digitarTexto(cartaTexto, cartaEl);
+    }
+
+    function fecharCarta() {
+      modal.classList.add("hidden");
+    }
+
+    function digitarTexto(texto, el) {
+      let i = 0;
+      const speed = 25;
+      function escrever() {
+        if (i < texto.length) {
+          el.innerHTML += texto.charAt(i);
+          i++;
+          setTimeout(escrever, speed);
+        }
+      }
+      escrever();
+    }
+
+    function compartilharWhatsApp() {
+      const texto = encodeURIComponent("Olha essa página linda que fiz pra você 💖");
+      const url = encodeURIComponent(window.location.href);
+      window.open(`https://wa.me/?text=${texto}%20${url}`, '_blank');
+    }
   </script>
 </body>
 </html>
