@@ -67,18 +67,11 @@
   <button id="compartilhar" style="display: none;">Compartilhar no WhatsApp</button>
 
   <script>
-    const images = [
-      "https://drive.google.com/uc?export=view&id=13G2g4tjSGt-BlhVgrC-Fg56mBzphWUxQ",
-      "https://drive.google.com/uc?export=view&id=1Ivda06GsteRg-vfMHhrqeoEpCm1R0VuB",
-      "https://drive.google.com/uc?export=view&id=1hclQqH0AkgWhR3-6dW5EMx1LB8U8v6Gr",
-      "https://drive.google.com/uc?export=view&id=11Jx51rcZomaQ7QFNBQRBCIxqq4KfWpw-",
-      "https://drive.google.com/uc?export=view&id=1qgjOWIbyiuPYBHeLWx7oNQWlij7eEHQg",
-      "https://drive.google.com/uc?export=view&id=1As0AhWsdKQkRtFi-52Z4_oZkixMOQJAd",
-      "https://drive.google.com/uc?export=view&id=1ANJAr-tAlNl6D95Z01AFEoXGV7qr-MbW",
-      "https://drive.google.com/uc?export=view&id=1wEfhHTRtbCU0ycm9dyTHXzWSObPb021C",
-      "https://drive.google.com/uc?export=view&id=1qKe0UKLUhxhGoQjuGNR8kNsIRRFARTjm",
-      "https://drive.google.com/uc?export=view&id=1T003GOKhWl7bid0NE9q8CuwRUac-qhi1"
-    ];
+    // Altere esse número se você tiver mais imagens na pasta img/
+    const totalImagens = 10;
+
+    // Monta os caminhos das imagens
+    const images = Array.from({ length: totalImagens }, (_, i) => `img/nos${i + 1}.jpeg`);
 
     const frases = [
       "Você ilumina minha vida ❤️",
