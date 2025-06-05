@@ -6,31 +6,38 @@
   <title>Feliz Aniversário 💖</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    body { margin: 0; background-color: #fff0f5; overflow: hidden; font-family: 'Segoe UI', sans-serif; }
+    body {
+      margin: 0;
+      background-color: #fff0f5;
+      font-family: 'Segoe UI', sans-serif;
+      height: 100vh;
+    }
     .fade-in { opacity: 1; transition: opacity 1s ease-in-out; }
     .fade-out { opacity: 0; transition: opacity 1s ease-in-out; }
     #textBox { transition: opacity 1s ease-in-out; }
     #carta { white-space: pre-wrap; overflow-y: auto; max-height: 80vh; }
   </style>
 </head>
-<body class="flex items-center justify-center h-screen relative">
+<body class="relative w-screen h-screen overflow-hidden">
 
   <img id="bgImage" class="absolute top-0 left-0 w-full h-full object-cover fade-in z-0" src="" alt="imagem" />
 
-  <div class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-30 z-10"></div>
-  <div class="absolute z-20 w-full h-full flex items-center justify-center px-4 text-center">
-    <div id="textBox" class="text-white text-xl md:text-3xl font-semibold opacity-0 bg-white bg-opacity-30 backdrop-blur p-4 rounded-xl"></div>
+  <div class="absolute inset-0 bg-black bg-opacity-30 z-10"></div>
+
+  <div class="absolute z-20 w-full h-full flex items-center justify-center px-6 text-center">
+    <div id="textBox" class="text-white text-base sm:text-lg md:text-2xl font-semibold opacity-0 bg-white bg-opacity-30 backdrop-blur p-4 rounded-xl max-w-md mx-auto">
+    </div>
   </div>
 
-  <div class="absolute bottom-4 left-0 right-0 flex flex-col items-center gap-3 z-30">
-    <button onclick="mostrarCarta()" class="bg-pink-600 text-white px-6 py-2 rounded-full shadow-md text-lg hover:bg-pink-700 transition">
+  <div class="absolute bottom-6 left-0 right-0 flex flex-col items-center gap-3 z-30 px-4">
+    <button onclick="mostrarCarta()" class="bg-pink-600 text-white px-5 py-2 rounded-full shadow-md text-base hover:bg-pink-700 transition w-full max-w-sm">
       💌 Leia minha carta pra você
     </button>
     <a href="#" onclick="compartilharWhatsApp()" class="text-sm text-white underline hover:text-pink-200">Compartilhar no WhatsApp</a>
   </div>
 
   <div id="cartaModal" class="fixed top-0 left-0 w-full h-full bg-black bg-opacity-80 z-40 hidden items-center justify-center p-4">
-    <div class="bg-white p-6 rounded-xl max-w-lg w-full text-pink-800 shadow-lg text-lg relative">
+    <div class="bg-white p-4 rounded-xl w-full max-w-md text-pink-800 shadow-lg text-base relative">
       <div id="carta" class="typing"></div>
       <button onclick="fecharCarta()" class="absolute top-2 right-4 text-pink-700 text-2xl font-bold">&times;</button>
     </div>
@@ -68,7 +75,6 @@ Alice, Eu quero que você seja a mãe dos meus filhos, o amor da minha vida, a m
 
 Eu te amo muito ❤️❤️`;
 
-    // Funções para randomizar
     function shuffle(array) {
       for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -113,11 +119,13 @@ Eu te amo muito ❤️❤️`;
 
     function mostrarCarta() {
       modal.classList.remove("hidden");
+      modal.classList.add("flex");
       cartaEl.innerHTML = "";
       digitarTexto(cartaTexto, cartaEl);
     }
 
     function fecharCarta() {
+      modal.classList.remove("flex");
       modal.classList.add("hidden");
     }
 
