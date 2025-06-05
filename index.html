@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Feliz Aniversário ❤️</title>
+  <style>
+    body {
+      background-color: #000;
+      color: #fff;
+      font-family: sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      text-align: center;
+      overflow-x: hidden;
+    }
+
+    img {
+      max-width: 90vw;
+      max-height: 60vh;
+      margin: 20px 0;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+    }
+
+    .text {
+      font-size: 1.2em;
+      padding: 0 20px;
+      max-width: 90vw;
+    }
+
+    #carta {
+      white-space: pre-line;
+      text-align: left;
+      font-size: 1em;
+      padding: 20px;
+      display: none;
+      border: 1px solid #444;
+      margin-top: 30px;
+      border-radius: 10px;
+      background-color: #111;
+    }
+
+    #compartilhar {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #25d366;
+      border: none;
+      border-radius: 10px;
+      color: white;
+      font-size: 1em;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <img id="photo" src="" alt="Foto do casal" />
+  <div class="text" id="frase"></div>
+
+  <div id="carta"></div>
+  <button id="compartilhar" style="display: none;">Compartilhar no WhatsApp</button>
+
+  <script>
+    const images = [
+      "https://drive.google.com/uc?export=view&id=13G2g4tjSGt-BlhVgrC-Fg56mBzphWUxQ",
+      "https://drive.google.com/uc?export=view&id=1Ivda06GsteRg-vfMHhrqeoEpCm1R0VuB",
+      "https://drive.google.com/uc?export=view&id=1hclQqH0AkgWhR3-6dW5EMx1LB8U8v6Gr",
+      "https://drive.google.com/uc?export=view&id=11Jx51rcZomaQ7QFNBQRBCIxqq4KfWpw-",
+      "https://drive.google.com/uc?export=view&id=1qgjOWIbyiuPYBHeLWx7oNQWlij7eEHQg",
+      "https://drive.google.com/uc?export=view&id=1As0AhWsdKQkRtFi-52Z4_oZkixMOQJAd",
+      "https://drive.google.com/uc?export=view&id=1ANJAr-tAlNl6D95Z01AFEoXGV7qr-MbW",
+      "https://drive.google.com/uc?export=view&id=1wEfhHTRtbCU0ycm9dyTHXzWSObPb021C",
+      "https://drive.google.com/uc?export=view&id=1qKe0UKLUhxhGoQjuGNR8kNsIRRFARTjm",
+      "https://drive.google.com/uc?export=view&id=1T003GOKhWl7bid0NE9q8CuwRUac-qhi1"
+    ];
+
+    const frases = [
+      "Você ilumina minha vida ❤️",
+      "O seu sorriso é o meu lugar preferido.",
+      "Que sorte a minha ter você!",
+      "Com você, tudo fica mais bonito.",
+      "Eu quero viver todos os aniversários com você.",
+      "Você é a resposta das minhas orações.",
+      "Cada dia com você é um presente.",
+      "Te amo mais do que palavras podem dizer.",
+      "Você é o meu mundo.",
+      "Feliz aniversário, meu amor!"
+    ];
+
+    const cartaFinal = `A gnt se conhece há pouco tempo, mas parece que te conheço há uma vida inteira. Em 1 mês de namoro, já tenho certeza de uma coisa: essa é a melhor escolha q eu poderia ter feito.
+
+Eu amo o seu sorriso, Amo o jeito q vc cuida de mim, mesmo quando vc está nervoso cmg, Amo sua risada, pq ela ilumina o meu dia cinza.
+
+Vc é romântica do jeitinho mais lindo, engraçada na medida certa e carinhosa como só você sabe ser. E cada pedacinho seu me faz querer ficar — não só hoje, mas em todos os aniversários que ainda vamos passar juntos.
+
+Que seu dia seja tão especial quanto vc é pra mim. Te desejo toda a felicidade do mundo, mas confesso que fico feliz de ser eu quem pode dar uma parte dela pra você. 
+
+Alice, Eu quero que você seja a mãe dos meus filhos, o amor da minha vida, a mulher com quem eu vou morar e me casar.
+
+Eu te amo muito ❤️❤️`;
+
+    const photo = document.getElementById("photo");
+    const frase = document.getElementById("frase");
+    const carta = document.getElementById("carta");
+    const btn = document.getElementById("compartilhar");
+
+    let i = 0;
+    let order = [...Array(images.length).keys()];
+    order.sort(() => Math.random() - 0.5);
+
+    function showNext() {
+      if (i < images.length) {
+        photo.src = images[order[i]];
+        frase.innerText = frases[Math.floor(Math.random() * frases.length)];
+        i++;
+        setTimeout(showNext, 3000);
+      } else {
+        photo.style.display = "none";
+        frase.style.display = "none";
+        typeWriter();
+      }
+    }
+
+    let j = 0;
+    function typeWriter() {
+      carta.style.display = "block";
+      if (j < cartaFinal.length) {
+        carta.innerHTML += cartaFinal.charAt(j);
+        j++;
+        setTimeout(typeWriter, 30);
+      } else {
+        btn.style.display = "inline-block";
+      }
+    }
+
+    btn.onclick = () => {
+      const msg = encodeURIComponent(cartaFinal);
+      const link = `https://wa.me/?text=${msg}`;
+      window.open(link, "_blank");
+    };
+
+    showNext();
+  </script>
+</body>
+</html>
